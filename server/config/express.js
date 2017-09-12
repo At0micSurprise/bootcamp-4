@@ -24,13 +24,14 @@ module.exports.init = function() {
   app.post('/api/coordinates', getCoordinates, function(req, res) {
     res.send(req.results);
   });
-
+  app.use(express.static('client'));
   /* serve static files */
-  
+  app.use('/api/listings', listingsRouter);
 
   /* use the listings router for requests to the api */
-
-
+  app.get('/*',function(req, res){
+    res.sendFile(path.join(__dirname + '../../../client/index.html'));
+  });
   /* go to homepage for all routes not specified */ 
 
   return app;
